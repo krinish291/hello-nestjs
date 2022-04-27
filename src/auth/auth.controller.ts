@@ -15,4 +15,21 @@ export class AuthController {
   signUp(@Body() dto: AuthDto) {
     return this.authService.signUp(dto);
   }
+
+  @Post('forgot-password')
+  forgotPassword(@Body() dto: { email: string }) {
+    return this.authService.forgotPassword(dto);
+  }
+
+  @Post('verify-otp')
+  verifyOtp(@Body() dto: { code: string; email: string }) {
+    return this.authService.verifyOtp(dto.email, dto.code);
+  }
+
+  @Post('reset-password')
+  updatePassword(
+    @Body() dto: { email: string; password: string; code: string },
+  ) {
+    return this.authService.updatePassword(dto);
+  }
 }

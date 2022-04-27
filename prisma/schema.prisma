@@ -20,8 +20,22 @@ model User {
   email     String   @unique
 
   bookMarks BookMark[]
+  Code      Code[]
+
 
   @@map("users")
+}
+
+model Code {
+  id         Int       @id @default(autoincrement())
+  code       String    @unique
+  user_id    Int       @unique
+  user       User      @relation(fields: [user_id], references: [id])
+  expired_at DateTime?
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+
+  @@map("codes")
 }
 
 model BookMark {
@@ -30,7 +44,7 @@ model BookMark {
   updatedAt   DateTime @updatedAt
   title       String
   url         String
-  discription String?
+  description String?
 
   userId Int
   user   User @relation(fields: [userId], references: [id])
